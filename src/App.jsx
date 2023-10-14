@@ -1,12 +1,27 @@
 import { useState } from 'react'
-
+import {BrowserRouter, Route,Routes} from "react-router-dom"
+import Home from './pages/Home'
+import About from './pages/About'
+import Signup from './pages/Signup'
+import Signout from './pages/Signout'
+import Signin from './pages/Signin'
+import UserProfile from './pages/UserProfile'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1 className='underline '>Hellow</h1>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Home/>} />
+      <Route path='/about' element={<About/>} />
+      <Route path='/signup' element={<Signup/>} />
+      <Route path='/signout' element={<Signout/>} />
+      <Route path='/signin' element={<Signin/>} />
+      <Route path='/profile' element={<UserProfile/>} />
+    </Routes>
+    </BrowserRouter>
     </>
   )
 }
