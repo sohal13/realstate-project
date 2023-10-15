@@ -1,13 +1,16 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart,signInSuccess,signInFaliur } from '../redux/user/userSlice';
 import { Link , useNavigate } from 'react-router-dom'
 const Signin = () => {
 
   const navigate = useNavigate();
+  const dispach = useDispatch();
 
   const [formData , setFormData] = useState({});
-  const [loading , setLoading]=useState(false);
-  const [error , setError]=useState(null);
+  const {loading , error}=useSelector((state)=>state.user);
+
 
   const handelChnage=(e)=>{
     setFormData({...formData,[e.target.id]:e.target.value})
@@ -15,22 +18,19 @@ const Signin = () => {
   const onSubmit=async(e)=>{
     e.preventDefault();
     try {
-      setLoading(true);
+      dispach(signInStart())
       const res = await axios.post('/api/auth/signin',formData)
       const data = await res.data;
-     
       if(data.success === false){
-        setLoading(false);
-        setError(data.message)
+        dispach(signInFaliur(data.message));
       }else{
-      setLoading(false)
-      setError(null)
+      dispach(signInSuccess(data))
       navigate('/')
     }
       
     } catch (error) {
-      setLoading(false);
-      setError(error.message)
+      dispach(signInFaliur(data.message));
+     
     }
 
   }
@@ -68,7 +68,7 @@ hover:opacity-90 disabled:opacity-80'
       </span>
       </Link>
       </p>
-      <p className='text-red-500 mt-2'>{error && <span>{error}</span>}</p>
+      <p className='text-red-500 mt-2'><span>{error}</span></p>
 </div>
 </div>
 </>
