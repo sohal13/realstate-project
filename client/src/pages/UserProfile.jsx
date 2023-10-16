@@ -15,7 +15,8 @@ const UserProfile = () => {
   const [fileError ,setFileError]=useState(false);
   const [formData ,setFormData]=useState({});
 
- 
+  console.log(formData.avatar);
+
   useEffect(()=>{
     if(file){
       handelFileUpdate(file);
@@ -63,10 +64,10 @@ const UserProfile = () => {
         />
 
         <p className='text-center text-red-500 text-[10px] flex flex-col'>
-        {fileError && fileper !== 100 ? (<span className='text-red-500'>Error Image Uploading(image must be less then 2Mb)</span>)  :(null)}
+        {fileError  ? (<span className='text-red-500'>Error Image Uploading(image must be less then 2Mb)</span>)  :(null)}
         {fileper > 0 && fileper < 100 ?
         (<span className='text-green-500'>Uploading {fileper}%</span>):(null) }
-        {fileper === 100 && fileError === null ? (<span className='text-green-500'>Image Succesfully uploaded!</span>):(null)}
+        {fileper === 100 ? (<span className='text-green-500'>Image Succesfully uploaded!</span>):(null)}
         {fileper>0 ?(null): (<span className='text-red-500'>Click on Image to Update</span>)}
          </p>
         <input type="text"

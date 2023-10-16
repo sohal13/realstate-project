@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
 import userRouter from "./routes/userrout.js";
-import authRouter from "./routes/authRout.js"
+import authRouter from "./routes/authRout.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -18,9 +19,11 @@ const app = express()
 
 app.use(express.json());
 
-
+app.use(cookieParser());
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
+
+
 
 
 app.use((err,req,res,next)=>{
@@ -35,7 +38,7 @@ app.use((err,req,res,next)=>{
 
 
 
-const PORT=process.env.PORT;
+const PORT=process.env.PORT || 3000;
 
 app.listen(PORT,()=>{
     console.log(`server working at ${PORT}`);
