@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart,signInSuccess,signInFaliur } from '../redux/user/userSlice';
 import { Link , useNavigate } from 'react-router-dom'
+import { Oauth } from '../components/Oauth';
 const Signin = () => {
 
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ my-7'
 className='bg-slate-700 text-white py-3 rounded-lg
 hover:opacity-90 disabled:opacity-80'
 >{loading ?"Loading...":"SignIn"}</button>
+<Oauth/>
 </form>
 <div className='gap-2 mt-5'>
   <p>Don't have an Account?

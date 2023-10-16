@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import { Oauth } from '../components/Oauth'
 
 const Signup = () => {
 
@@ -77,6 +78,7 @@ try {
       className='bg-slate-700 text-white py-3 rounded-lg
       hover:opacity-90 disabled:opacity-80'
       >{Loading ? "Loading...":"SignIn"}</button>
+      <Oauth/>
       </form>
       <div className='gap-2 mt-5'>
         <p>Have an Account?

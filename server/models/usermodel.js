@@ -13,12 +13,15 @@ const userSchema = new mongoose.Schema({
     },
     phone:{
         type:Number,
-        require:true,
         unique:true,
     },
     password:{
         type:String,
         require:true,
+    },
+    avtar:{
+        type:String,
+        default:"https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
     }
 },{timestamps:true});
 
