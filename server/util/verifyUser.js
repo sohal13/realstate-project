@@ -4,7 +4,7 @@ import JWT from 'jsonwebtoken'
 export const userVerify=async(req,res,next)=>{
     
     const token = req.cookies.accesToken;
-    console.log(token);
+    
     if(!token) return next(errorHandler(401,"User not Authorized"))
 
     JWT.verify(token ,process.env.JWT_TOKEN ,(err,user)=>{

@@ -7,7 +7,6 @@ function Header() {
 
   const {currentUser} = useSelector(state => state.user)
   //console.log(currentUser.rest.avtar);
-
   return (
     <header className='bg-slate-300 shadow-md'>
     <div className='flex justify-between items-center max-w-6xl mx-auto p-3' >
@@ -27,9 +26,9 @@ type='text' placeholder='Search...'/>
       <li className='hidden sm:inline hover:scale-105 hover:text-slate-500'><Link to={'/'}>Home</Link></li>
       <li className='hidden sm:inline hover:scale-105 hover:text-slate-500'><Link to={'/about'}>About</Link></li>
       {
-        currentUser ? (<Link to={"/profile"}><img src={currentUser.rest.avtar} alt={currentUser.rest.username}
+        currentUser.rest ? (<Link to={"/profile"}><img src={currentUser.rest?.avtar} alt={currentUser.rest?.username}
         className='rounded-full h-8 w-8 sm:h-10 sm:w-10 cursor-pointer object-cover'/></Link>)
-        :(<li className=' hover:scale-105 hover:text-slate-500 text-sm'><Link to={'/signin'}>Sign-in</Link></li>) 
+        :(<li className=' hover:scale-105 bg-slate-700 px-2 py-1 rounded-lg text-white text-center'><Link to={'/signin'}>Sign In</Link></li>) 
       }
 
     </ul>

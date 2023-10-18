@@ -5,7 +5,7 @@ import { Outlet ,Navigate } from 'react-router-dom'
 const  SignPrivateRout= () => {
     const {currentUser} = useSelector(state => state.user)
   return (
-   currentUser ? <Navigate to={'/'}/> : <Outlet/>
+   currentUser.rest ? <Navigate to={'/'}/> : <Outlet/>
   )
 }
 
