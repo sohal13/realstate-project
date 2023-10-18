@@ -24,10 +24,6 @@ const userListing = new mongoose.Schema({
         type:Number,
         required: true,
     },
-    offer:{
-        type:Boolean,
-    required: true,
-    },
     image:{
         type:Array,
         required: true,

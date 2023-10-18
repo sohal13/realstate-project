@@ -166,7 +166,7 @@ const handelDeleteUser=async()=>{
       className='bg-red-500 text-white rounded-lg hover:opacity-90 cursor-pointer px-4 py-2'>Sign-Out Now</button>
       </p>
       <p className='flex flex-col text-center my-6 gap-4'>
-      <button className='bg-green-600 py-2 text-white rounded-lg hover:opacity-95'>List Property</button>
+      <button className='bg-green-600 py-2 text-white rounded-lg hover:opacity-95'><Link to={"/createlisting"}>List Property</Link></button>
         <button className='bg-green-600 mx-20 py-2 rounded-lg text-white hover:opacity-95'><Link to={''}>Show My Listing</Link></button></p>
     </div>
   )
