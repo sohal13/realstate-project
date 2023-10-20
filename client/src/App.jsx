@@ -9,6 +9,7 @@ import Header from './components/Header'
 import PrivateRout from './components/PrivateRout'
 import SignPrivateRout from './components/signPrivateRout'
 import CreateListing from './pages/CreateListing'
+import ShowListing from './pages/ShowListing'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -27,6 +28,8 @@ function App() {
       <Route element={<PrivateRout/>}>
       <Route path='/profile' element={<UserProfile/>} />
       <Route path='/createlisting' element={<CreateListing/>} />
+      <Route path='/showlisting/:id' element={<ShowListing/>} />
+
       </Route>
     </Routes>
     </BrowserRouter>

@@ -1,16 +1,30 @@
 import React, { useState } from 'react'
 import {app} from '../firebase'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
+import axios from 'axios'
+import {BsCurrencyRupee} from 'react-icons/bs'
+import {AiOutlineAreaChart} from 'react-icons/ai'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const CreateListing = () => {
+
+    const {currentUser} = useSelector(state=>state.user)
+    const navigate = useNavigate();
 
      const [file , setFile]=useState([])
      const [formData ,setFormData]=useState({
         image:[],
+        name:"",
+        description:"",
+        address:"",
+        price:0,
+        discountprice:0,
+        area:0,
+
      });
      const [loading,setLoading] = useState(false)
      const [imageError,setImageError] = useState(false)
-console.log(formData);
 
      const handelImageSubmit=()=>{
             if(file.length > 0 && file.length + formData.image.length < 7){
@@ -38,6 +52,8 @@ console.log(formData);
             }
 
         }
+
+
 
      const storeImage=async(file)=>{
         return new Promise((resolve,reject)=>{
@@ -71,11 +87,40 @@ console.log(formData);
             });
      };
 
+const handelChange=(e)=>{
+    setFormData({
+        ...formData,[e.target.id]:e.target.value,
+    })
+}
+
+const handelUploadData =async (e)=>{
+    e.preventDefault();
+    try {
+        if(formData.image.length <1 ) return setImageError("you must upload at list 1 image")
+        if(formData.price < formData.discountprice ) return setImageError("discount price must be lower then price")
+        setLoading(true);
+        setImageError(false)
+        const res = await axios.post(`/api/listing/createlisting/`,{...formData,
+        userRef:currentUser.rest._id})
+        const data = res.data;
+        if(data.succcess===false){
+            console.log(data.message);
+            setImageError(data.message)
+        }
+        setLoading(false)
+        console.log(data.listing._id);
+        navigate(`/showlisting/${data.listing._id}`)
+    } catch (error) {
+        setImageError(error.message)
+    }
+  
+}
+
     return (
         <div className='max-w-4xl mx-auto p-3'>
             <h1 className='text-3xl font-bold text-center my-7'>List Your Property</h1>
 
-            <form className='flex flex-col sm:flex-row gap-4 justify-between'>
+            <form onSubmit={handelUploadData} className='flex flex-col sm:flex-row gap-4 justify-between'>
                 <div className=' flex flex-col gap-3 flex-1'>
                     <input
                         type='text'
@@ -83,13 +128,17 @@ console.log(formData);
                         id="name"
                         className='py-3 rounded-lg px-3'
                         required
+                        onChange={handelChange}
+                        value={formData.name}
                     />
                     <textarea
                         type='text'
                         placeholder='Description..'
-                        id="discription"
+                        id="description"
                         className='py-3 rounded-lg px-3'
                         required
+                        onChange={handelChange}
+                        value={formData.description}
                     />
                     <input
                         type='text'
@@ -97,42 +146,55 @@ console.log(formData);
                         id="address"
                         className='py-3 rounded-lg px-3'
                         required
+                        onChange={handelChange}
+                        value={formData.address}
                     />
                     <div className='flex justify-between gap-3 flex-wrap'>
 
                         <div className='flex gap-3 items-center ' >
+                        <div className='flex justify-center bg-white rounded-lg'>
+                            <BsCurrencyRupee size={25} className='self-center'/>
                             <input
                                 type='number'
                                 id='price'
-                                className='py-3 rounded-lg p-3'
+                                className='py-3 rounded-lg bg-transparent'
                                 required
+                                onChange={handelChange}
+                                value={formData.price}
                             />
-                            <p className='flex flex-col text-center '>Regular price
-                                <span> ( ₹ )</span>
-                            </p>
+                            </div>
+                            <p className='flex flex-col text-center '>Regular price</p>
 
                         </div>
                         
                         <div className='flex gap-3 items-center '>
-                            
+                            <div className='flex justify-center bg-white rounded-lg'>
+                            <BsCurrencyRupee size={25} className='self-center'/>
                             <input
                                 type='number'
                                 id='discountprice'
-                                className='py-3 rounded-lg  p-3'
+                                className='py-3 rounded-lg  bg-transparent'
                                 required
+                                onChange={handelChange}
+                                value={formData.discountprice}
                             />
+                            </div>
                             <p className='flex flex-col text-center '>Discount price
-                                <span>( ₹ )</span>
                             </p>
                         </div>
                         <div className='flex gap-4 items-center ' >
+                        <div className='flex justify-center bg-white rounded-lg'>
+                            <AiOutlineAreaChart size={25} className='self-center'/>
                             <input
                                 type='number'
                                 id='area'
-                                className='py-3 rounded-lg p-3'
+                                className='py-3 rounded-lg bg-transparent'
                                 required
+                                onChange={handelChange}
+                                value={formData.area}
                             />
-                            <p className='flex flex-col text-center '>Total Area
+                            </div>
+                            <p className='flex flex-col text-center '>Area
                                 <span> ( sq ft )</span>
                             </p>
                         </div>
@@ -172,7 +234,10 @@ console.log(formData);
                                 ))
                             }
                     <p className='text-red-600 text-sm'>{imageError && imageError}</p>
-                    <button className='bg-green-500 rounded-lg py-2 text-white hover:scale-105' >Upload Property</button>
+                    <button 
+                    type='submit'
+                    className='bg-green-500 rounded-lg py-2 text-white hover:scale-105' >{loading ? "Creating...":"Creating Property"}</button>
+      
                 </div>
             </form>
         </div>
