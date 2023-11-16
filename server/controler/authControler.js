@@ -48,9 +48,9 @@ export const signIn=async(req,res,next)=>{
             }).status(401)
         }
     
-        const token = JWT.sign({id:user._id},process.env.JWT_TOKEN)
+        const token = JWT.sign({id:user._id},process.env.JWT_TOKEN,{expiresIn:'100 years'})
         const {password:pass, ...rest}=user._doc;
-        res.cookie('accesToken',token,{httpOnly:true})
+        res.cookie('accesToken',token,{httpOnly:true,expires:new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)})
         .status(200).json({
             success:true,
             message:"Signin Succesfull",
@@ -67,9 +67,9 @@ export const google = async(req,res,next)=>{
     try {
         const user = await User.findOne({email:req.body.email});
         if (user) {
-            const token = JWT.sign({id:user._id},process.env.JWT_TOKEN)
+            const token = JWT.sign({id:user._id},process.env.JWT_TOKEN,{expiresIn:'100 years'})
             const {password:pass, ...rest}=user._doc;
-            res.cookie('accesToken',token,{httpOnly:true})
+            res.cookie('accesToken',token,{httpOnly:true,expires:new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000)})
             .json({
                 rest
             }).status(200);
@@ -79,9 +79,9 @@ export const google = async(req,res,next)=>{
             const newUser =new User({username:req.body.name.split(" ").join("").toLowerCase()+Math.random().toString(36).slice(-8),
                 email:req.body.email,password:hashPassowrd,avtar:req.body.photo})
                 await newUser.save();
-                const token = JWT.sign({id:newUser._id},process.env.JWT_TOKEN)
+                const token = JWT.sign({id:newUser._id},process.env.JWT_TOKEN,{expiresIn:'100 years'})
                 const {password:pass, ...rest}=newUser._doc;
-                res.cookie('accesToken',token,{httpOnly:true})
+                res.cookie('accesToken',token,{httpOnly:true,expires:new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000) })
                 .json({
                     rest
                 }).status(200);  

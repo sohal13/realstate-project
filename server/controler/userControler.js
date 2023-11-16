@@ -1,6 +1,7 @@
 import { errorHandler } from "../util/error.js";
 import bcryptjs from 'bcryptjs'
 import User from '../models/usermodel.js'
+import Listing from "../models/listingmodel.js";
 
 export const test = (req,res)=>{
     res.json({
@@ -52,6 +53,18 @@ export const userDelete =async(req,res,next)=>{
         }
         await User.findByIdAndDelete(req.params.id) 
         res.json("User deleted").status(200).clearCookie('accessToken')
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const userListing=async(req,res,next)=>{
+    try {
+        if(req.user.id !== req.params.id){
+            return next(errorHandler(401,"you can only view your own listing"))
+        }
+        const listing = await Listing.find({userRef:req.params.id});
+        res.json(listing).status(200);
     } catch (error) {
         next(error)
     }

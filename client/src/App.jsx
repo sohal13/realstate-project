@@ -10,6 +10,9 @@ import PrivateRout from './components/PrivateRout'
 import SignPrivateRout from './components/signPrivateRout'
 import CreateListing from './pages/CreateListing'
 import ShowListing from './pages/ShowListing'
+import ShowAllListing from './pages/ShowAllListing'
+import EditSingleListing from './pages/EditSingleListing'
+import SearchListing from './pages/SearchListing'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +24,9 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/about' element={<About/>} />
+      <Route path='/listing' element={<ShowAllListing/>} />
+      <Route path='/showlisting/:id' element={<ShowListing/>} />
+      <Route path='/search' element={<SearchListing/>}/>
       <Route element={<SignPrivateRout/>}>
       <Route path='/signin' element={<Signin/>} />
       <Route path='/signup' element={<Signup/>} />
@@ -28,7 +34,7 @@ function App() {
       <Route element={<PrivateRout/>}>
       <Route path='/profile' element={<UserProfile/>} />
       <Route path='/createlisting' element={<CreateListing/>} />
-      <Route path='/showlisting/:id' element={<ShowListing/>} />
+      <Route path='/editsinglelisting/:id' element={<EditSingleListing/>} />
 
       </Route>
     </Routes>

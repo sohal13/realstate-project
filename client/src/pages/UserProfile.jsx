@@ -154,7 +154,6 @@ const handelDeleteUser=async()=>{
         className='rounded-lg py-2 p-3 border'
         onChange={handelChnage}
         />
-        <p className='text-sm text-green-500 text-center'>{updateUser}</p>
         <button className='bg-slate-600 py-2 text-white rounded-lg hover:opacity-95'>Update</button>
       </form>
       <p className='flex justify-between my-4'>
@@ -167,7 +166,7 @@ const handelDeleteUser=async()=>{
       </p>
       <p className='flex flex-col text-center my-6 gap-4'>
       <button className='bg-green-600 py-2 text-white rounded-lg hover:opacity-95'><Link to={"/createlisting"}>List Property</Link></button>
-        <button className='bg-green-600 mx-20 py-2 rounded-lg text-white hover:opacity-95'><Link to={''}>Show My Listing</Link></button></p>
+        <button className='bg-green-600 mx-20 py-2 rounded-lg text-white hover:opacity-95'><Link to={'/listing'}>Show My Listing</Link></button></p>
     </div>
   )
 }
